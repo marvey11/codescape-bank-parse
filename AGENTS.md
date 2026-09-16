@@ -8,6 +8,7 @@
 - Package code lives in `src/codescape/parse/`.
 - Tests live in `tests/` and use pytest.
 - Dependencies and tool configuration are defined in `pyproject.toml`; `uv.lock` is committed.
+- `pyproject.toml` is the explicit source of truth for Python version, dependency groups, Ruff settings, mypy settings, pytest configuration, and coverage thresholds. If a configuration question arises, check `pyproject.toml` before relying on any other file or editor default.
 
 ## Development Commands and Conventions
 
@@ -39,7 +40,7 @@ Run commands from the repository root with uv available.
 uv sync --locked --all-extras --dev
 ```
 
-Use this before validation or when dependencies, workspace metadata, or `uv.lock`
+Use this before validation or when dependencies, repository metadata, or `uv.lock`
 change. The locked form ensures the installed dependency graph matches the lockfile.
 
 ### CI checks
@@ -56,7 +57,7 @@ uv run pytest
 
 Run the same sequence locally before submitting a change. Ruff lint checks rules
 configured in `pyproject.toml`, Ruff format check detects unformatted files, mypy
-runs strict type checking, and pytest runs the complete workspace suite with the
+runs strict type checking, and pytest runs the complete test suite with the
 configured coverage threshold.
 
 ### Formatting and Linting
@@ -120,7 +121,7 @@ verify test discovery without executing tests.
 
 Also check the VS Code Problems view with Pylance enabled for every changed
 Python file and resolve reported errors before submitting the change. Pylance
-diagnostics complement -- but do not replace -- the workspace-wide mypy check.
+diagnostics complement -- but do not replace -- the repository-wide mypy check.
 
 ## Change Workflow
 
