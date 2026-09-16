@@ -19,6 +19,8 @@ Use uv from the repository root:
 - `uv run ruff format --check .`
 - `uv run mypy .`
 
+Follow these conventions:
+
 - Target Python 3.12 or newer.
 - Use 4 spaces and a maximum line length of 88 characters.
 - Use double-quoted strings, consistent with Ruff format configuration.
