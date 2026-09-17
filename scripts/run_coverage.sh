@@ -3,11 +3,10 @@ set -euo pipefail
 
 echo "Running full test suite with coverage..."
 
-# Run pytest with explicit coverage flags
+# Run pytest with explicit coverage flags and coverage threshold check
 uv run pytest \
   --cov=codescape.parse \
   --cov-report=term-missing \
-  --cov-report=html \
-  --cov-report=xml
+  --cov-fail-under=80
 
 echo "✅ All tests passed with sufficient coverage."
