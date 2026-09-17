@@ -7,7 +7,12 @@ authors = [
     { name = "Marco Wegner", email = "673439+marvey11@users.noreply.github.com" },
 ]
 requires-python = ">=3.12"
-dependencies = ["codescape-shared-pie", "pdfplumber>=0.11.10"]
+dependencies = [
+    "codescape-shared-pie",
+    "pdfplumber>=0.11.10",
+    "pydantic>=2.13.5",
+    "pypdf>=6.19.0",
+]
 
 [dependency-groups]
 dev = [
@@ -15,7 +20,9 @@ dev = [
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
+    "reportlab>=5.0.1",  # Only used for E2E testing at this point
     "ruff>=0.16.5",
+    "types-reportlab>=5.0.0.20260911",
 ]
 
 [tool.uv.sources]
@@ -101,7 +108,7 @@ pythonpath = "src"
 testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
-addopts = "-ra -q --cov=codescape.parse --cov-report=term-missing --cov-report=xml --cov-report=html"
+addopts = "-ra -q"
 
 [tool.coverage.run]
 branch = true
