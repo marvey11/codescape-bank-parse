@@ -328,7 +328,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "codescape-shared-pie", git = "https://github.com/marvey11/codescape-shared-pie.git?tag=v0.1.1" },
+    { name = "codescape-shared-pie", git = "https://github.com/marvey11/codescape-shared-pie.git?tag=v0.1.2" },
     { name = "pdfplumber", specifier = ">=0.11.10" },
     { name = "pydantic", specifier = ">=2.13.5" },
     { name = "pypdf", specifier = ">=6.19.0" },
@@ -347,8 +347,8 @@ dev = [
 
 [[package]]
 name = "codescape-shared-pie"
-version = "0.1.1"
-source = { git = "https://github.com/marvey11/codescape-shared-pie.git?tag=v0.1.1#af9ae9aa1855bca371c4133a2f3079af2f39d272" }
+version = "0.1.2"
+source = { git = "https://github.com/marvey11/codescape-shared-pie.git?tag=v0.1.2#b59d4f2a101c4fb1e24e7a861ce79311e654f1b6" }
 
 [[package]]
 name = "colorama"

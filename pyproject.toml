@@ -20,13 +20,13 @@ dev = [
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "reportlab>=5.0.1",  # Only used for E2E testing at this point
+    "reportlab>=5.0.1",                # Only used for E2E testing at this point
     "ruff>=0.16.5",
     "types-reportlab>=5.0.0.20260911",
 ]
 
 [tool.uv.sources]
-codescape-shared-pie = { git = "https://github.com/marvey11/codescape-shared-pie.git", tag = "v0.1.1" }
+codescape-shared-pie = { git = "https://github.com/marvey11/codescape-shared-pie.git", tag = "v0.1.2" }
 
 [build-system]
 requires = ["hatchling"]
