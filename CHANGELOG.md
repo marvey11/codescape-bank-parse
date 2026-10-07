@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Full classification of account statements documents
+- Full classification of account statement documents ([ae02697](https://github.com/marvey11/codescape-bank-parse/commit/ae02697c2ae60ff4f06be7dddfc29a9951484d4a))

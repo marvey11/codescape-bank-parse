@@ -52,13 +52,13 @@ It runs these commands after installing dependencies:
 uv run ruff check .
 uv run ruff format --check .
 uv run mypy .
-uv run pytest
+./scripts/run_coverage.sh
 ```
 
-Run the same sequence locally before submitting a change. Ruff lint checks rules
-configured in `pyproject.toml`, Ruff format check detects unformatted files, mypy
-runs strict type checking, and pytest runs the complete test suite with the
-configured coverage threshold.
+Run the same sequence locally before submitting a change. The coverage script runs
+the complete pytest suite with the configured 80% coverage threshold. Ruff lint
+checks rules configured in `pyproject.toml`, Ruff format check detects unformatted
+files, and mypy runs strict type checking.
 
 ### Formatting and Linting
 
@@ -81,7 +81,7 @@ uv run mypy .
 ### Tests and Coverage
 
 ```sh
-uv run pytest
+./scripts/run_coverage.sh
 ```
 
 Tests use pytest and are discovered from `tests` according to the root
@@ -101,7 +101,8 @@ uv run pre-commit run --all-files --hook-stage pre-push
 ```
 
 The configured hooks verify the uv lockfile, large files, JSON, TOML, YAML, EOFs,
-trailing whitespace, Ruff linting, and Ruff formatting. The pre-push stage also runs:
+trailing whitespace, Ruff linting and formatting, and mypy. The pre-push stage also
+runs:
 
 ```sh
 uv run pytest

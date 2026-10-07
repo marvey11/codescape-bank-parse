@@ -27,6 +27,14 @@ class MockUnusedClassifier(BaseDocumentClassifier):
         return None
 
 
+class MockNonProducingClassifier(BaseDocumentClassifier):
+    def can_classify(self, text_content: str) -> bool:
+        return True
+
+    def classify(self, text_content: str) -> DocumentMetadata | None:
+        return None
+
+
 class TestClassifierRegistry:
     """Unit tests for ClassifierRegistry dispatching logic."""
 
@@ -56,8 +64,18 @@ class TestClassifierRegistry:
         assert metadata is not None
         assert metadata.bank == BankIdentifier.COMDIRECT
 
+    def test_classify_continues_when_classifier_returns_no_metadata(self) -> None:
+        registry = ClassifierRegistry()
+        registry.register(MockNonProducingClassifier)
+        registry.register(MockMatchingClassifier)
+
+        metadata = registry.classify("some document text")
+
+        assert metadata is not None
+        assert metadata.bank == BankIdentifier.COMDIRECT
+
     def test_classify_returns_none_when_no_classifier_matches(self) -> None:
-        """Verify registry retu rns None when no registered classifier matches."""
+        """Verify registry returns None when no registered classifier matches."""
 
         registry = ClassifierRegistry()
 
