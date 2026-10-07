@@ -18,7 +18,9 @@ class ClassifierRegistry:
         for classifier_cls in self._classifiers:
             classifier = classifier_cls()
             if classifier.can_classify(text_content):
-                return classifier.classify(text_content)
+                metadata = classifier.classify(text_content)
+                if metadata is not None:
+                    return metadata
         return None
 
 
