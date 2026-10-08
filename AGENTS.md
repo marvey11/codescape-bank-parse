@@ -105,7 +105,7 @@ trailing whitespace, Ruff linting and formatting, and mypy. The pre-push stage a
 runs:
 
 ```sh
-uv run pytest
+./scripts/run_coverage.sh
 ```
 
 Run pre-commit after changing Python, configuration, workflow, or lock files.
