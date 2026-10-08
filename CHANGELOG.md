@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-08
+
+### Added
+
+- Extended document classifiers ([21706a5](https://github.com/marvey11/codescape-bank-parse/commit/21706a58532a426fbb29a1fed6da740a22481456))
+
 ## [0.1.0] - 2026-10-07
 
 ### Added

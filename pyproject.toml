@@ -1,6 +1,6 @@
 [project]
 name = "codescape-bank-parse"
-version = "0.1.0"
+version = "0.1.1"
 description = "Scanner for different types of bank documents"
 readme = "README.md"
 authors = [
