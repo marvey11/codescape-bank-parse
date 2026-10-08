@@ -2,7 +2,8 @@
 
 `codescape-bank-parse` is a shared Python library for identifying bank documents
 and extracting classification metadata. It currently reads PDF files and supports
-monthly and quarterly account statements from comdirect, ING and Scalable Capital.
+account statements from comdirect, ING and Scalable Capital. Scalable Capital
+documents also include contract notes and dividend corporate actions.
 
 The library is intended for use in document-routing and portfolio-tracking
 applications. Support for other input formats can be added as needed.
