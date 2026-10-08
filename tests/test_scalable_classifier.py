@@ -119,3 +119,49 @@ class TestScalableClassifier:
         assert metadata.statement_period_year == 2026
         assert metadata.statement_period_quarter == 2
         assert metadata.account_iban == "DE76120700701234567858"
+
+    def test_classify_contract_note(self) -> None:
+        classifier = ScalableClassifier()
+        text = (
+            "Scalable Capital Bank GmbH\nContract note for client order\n"
+            "Buy NVIDIA\nUS67066G1040\nDate 09.06.2026"
+        )
+
+        metadata = classifier.classify(text)
+
+        assert metadata is not None
+        assert metadata.category == DocumentCategory.SECURITY_TRANSACTION
+        assert metadata.transaction_type == "buy"
+        assert metadata.security_identifier == "US67066G1040"
+        assert metadata.document_date is not None
+        assert metadata.document_date.isoformat() == "2026-06-09"
+
+    def test_classify_sell_contract_note(self) -> None:
+        classifier = ScalableClassifier()
+        text = (
+            "Scalable Capital Bank GmbH\nContract note for client order\n"
+            "Sell Schneider Electric\nFR0000121972\nDate 08.04.2026"
+        )
+
+        metadata = classifier.classify(text)
+
+        assert metadata is not None
+        assert metadata.category == DocumentCategory.SECURITY_TRANSACTION
+        assert metadata.transaction_type == "sell"
+        assert metadata.security_identifier == "FR0000121972"
+
+    def test_classify_dividend_corporate_action(self) -> None:
+        classifier = ScalableClassifier()
+        text = (
+            "Scalable Capital Bank GmbH\nDividend for period 01.01.2025 - 31.12.2025\n"
+            "ISIN DE0008430026\nClearing account DE04120700700758294113\n"
+            "Date 04.05.2026"
+        )
+
+        metadata = classifier.classify(text)
+
+        assert metadata is not None
+        assert metadata.category == DocumentCategory.CORPORATE_ACTION
+        assert metadata.transaction_type == "dividend"
+        assert metadata.security_identifier == "DE0008430026"
+        assert metadata.account_iban == "DE04120700700758294113"

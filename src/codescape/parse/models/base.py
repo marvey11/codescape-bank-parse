@@ -38,5 +38,7 @@ class DocumentMetadata(BaseModel):
     statement_period_month: int | None = Field(default=None, ge=1, le=12)
     statement_period_quarter: int | None = Field(default=None, ge=1, le=4)
     account_iban: str | None = None
+    security_identifier: str | None = None
+    transaction_type: str | None = None
     document_date: date | None = None
     schema_version: int = 1

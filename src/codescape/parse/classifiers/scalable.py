@@ -12,7 +12,7 @@ from codescape.parse.models import (
 
 
 class ScalableClassifier(BaseDocumentClassifier):
-    """Classifier for Scalable Capital Bank account and periodic statements."""
+    """Classifier for Scalable Capital Bank documents."""
 
     schema_version: int = 1
 
@@ -48,6 +48,11 @@ class ScalableClassifier(BaseDocumentClassifier):
         re.IGNORECASE,
     )
 
+    CONTRACT_NOTE_PATTERN = re.compile(r"Contract\s+note\s+for\s+client\s+order", re.I)
+    TRADE_PATTERN = re.compile(r"\b(Buy|Sell)\s+", re.I)
+    DIVIDEND_PATTERN = re.compile(r"Dividend\s+for\s+period", re.I)
+    ISIN_PATTERN = re.compile(r"\b(?:ISIN\s+)?([A-Z]{2}[A-Z0-9]{10})\b", re.I)
+
     def can_classify(self, text_content: str) -> bool:
         """Verify whether the text contains Scalable Capital bank signatures."""
         if not text_content:
@@ -60,6 +65,27 @@ class ScalableClassifier(BaseDocumentClassifier):
         """
         if not self.can_classify(text_content):
             return None
+
+        is_contract_note = bool(self.CONTRACT_NOTE_PATTERN.search(text_content))
+        is_dividend = bool(self.DIVIDEND_PATTERN.search(text_content))
+        category = DocumentCategory.ACCOUNT_STATEMENT
+        transaction_type: str | None = None
+        security_identifier: str | None = None
+
+        if is_contract_note:
+            category = DocumentCategory.SECURITY_TRANSACTION
+            trade_match = self.TRADE_PATTERN.search(text_content)
+            if trade_match:
+                transaction_type = trade_match.group(1).lower()
+                isin_match = self.ISIN_PATTERN.search(text_content)
+                if isin_match:
+                    security_identifier = isin_match.group(1).upper()
+        elif is_dividend:
+            category = DocumentCategory.CORPORATE_ACTION
+            transaction_type = "dividend"
+            isin_match = self.ISIN_PATTERN.search(text_content)
+            if isin_match:
+                security_identifier = isin_match.group(1).upper()
 
         # Determine frequency
         is_quarterly = bool(self.QUARTERLY_SIGNATURE.search(text_content))
@@ -98,12 +124,14 @@ class ScalableClassifier(BaseDocumentClassifier):
 
         return DocumentMetadata(
             bank=BankIdentifier.SCALABLE,
-            category=DocumentCategory.ACCOUNT_STATEMENT,
+            category=category,
             frequency=frequency,
             statement_period_year=period_year,
             statement_period_month=period_month,
             statement_period_quarter=period_quarter,
             document_date=doc_date,
             account_iban=iban,
+            security_identifier=security_identifier,
+            transaction_type=transaction_type,
             schema_version=self.schema_version,
         )
